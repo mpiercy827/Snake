@@ -51,7 +51,6 @@
     var view = this;
 
     $rows.each(function (rowIndex, row) {
-      console.log(rowIndex);
       for (var j = 0; j < view.board.cols; j++) {
         var $cell = $("<div>")
                     .addClass("cell")
