@@ -5,6 +5,7 @@
 
   var View = Snake.View = function($el) {
     this.$el = $el;
+    this.score = 0;
     this.stepTime = 80;
     this.moving = false;
     this.board = new Snake.Board();
@@ -26,6 +27,7 @@
       clearInterval(this.IntID);
       alert("You lost! Press OK to play again!");
       this.moving = false;
+      this.score = 0;
       this.start();
     } else {
       this.eatApples();
@@ -39,6 +41,7 @@
 
     if (applePos[0] === snakeHead[0] && applePos[1] === snakeHead[1]) {
       this.board.convertApple();
+      this.score += 1;
     }
   };
 
@@ -58,7 +61,9 @@
                     .attr("data-col", j);
         $(row).append($cell);
       }
-    })
+    });
+
+    $(".score").text(this.score);
   };
 
   View.prototype.updateView = function () {
@@ -77,6 +82,8 @@
       var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
       $cell.addClass("apple");
     });
+
+    $(".score").text(this.score);
   };
 
   View.prototype.bindEvents = function () {
