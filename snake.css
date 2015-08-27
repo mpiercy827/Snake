@@ -1,0 +1,41 @@
+body {
+  background-color: #FFFFED;
+}
+
+.game-container {
+  position: relative;
+  display: block;
+  width: 480px;
+  height: 480px;
+  margin: 0 auto;
+  background-color: #000;
+  padding: 10px;
+}
+
+.title {
+  font-family: helvetica, sans-serif;
+  font-size: 48px;
+  text-align: center;
+}
+
+.row {
+  display: block;
+  clear: both;
+}
+
+.cell {
+  background-color: #fff;
+  box-sizing: border-box;
+  float: left;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #eee;
+}
+
+.cell.snake {
+  background-color: #0c9;
+}
+
+.cell.apple {
+  background-color: #A80000;
+}
