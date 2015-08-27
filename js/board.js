@@ -12,6 +12,8 @@
   Board.prototype.resetBoard = function () {
     this.grid = [];
     this.apples = [];
+    this.goldenApples = [];
+    this.poisonApples = [];
     this.startPos = [Math.floor(this.rows/2), Math.floor(this.cols/2)];
     this.snake = new Snake.Snake(this.startPos);
     this.addApple();
@@ -28,28 +30,38 @@
     }
   };
 
+  //To check if position is out of bounds
   Board.prototype.outOfBounds = function (pos) {
     var row = pos[0];
     var col = pos[1];
     return (row < 0 || row >= this.rows || col < 0 || col >= this.cols);
   };
 
+  //To check if snake is out of bounds
   Board.prototype.snakeOut = function () {
     var snakeHead = this.snake.segments[0];
     return this.outOfBounds(snakeHead.pos) ? true : false;
   };
 
-  Board.prototype.addApple = function () {
-    var randRow = Math.floor(Math.random() * this.rows);
-    var randCol = Math.floor(Math.random() * this.cols);
 
-    var applePos = [randRow, randCol];
+  Board.prototype.addApple = function (type) {
+    var pos;
+    do {
+      pos = Vector.randomPos(this.cols, this.rows);
+    } while (this.occupied(pos));
+
+    this.apples.push(new Apple(pos));
+  };
+
+  Board.prototype.occupied = function (position) {
     var occupied = false;
     this.snake.allCoords().forEach(function (pos) {
-      if (pos[0] === applePos[0] && pos[1] === applePos[1]) { occupied = true; }
+      if (pos[0] === position[0] && pos[1] === posistion[1]) {
+        occupied = true;
+      }
     });
 
-    occupied ? this.addApple() : this.apples.push(new Apple(applePos));
+    return occupied;
   };
 
   Board.prototype.convertApple = function () {
@@ -57,4 +69,5 @@
     this.apples.pop();
     this.addApple();
   };
+
 })();

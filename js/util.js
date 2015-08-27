@@ -26,4 +26,11 @@
   Vector.prototype.isOpposite = function (otherVector) {
     return (this.plus(otherVector).equals(new Vector([0,0])));
   };
+
+  Vector.randomPos = function (numCols, numRows) {
+    var randRow = Math.floor(Math.random() * numRows);
+    var randCol = Math.floor(Math.random() * numCols);
+
+    return [randRow, randCol];
+  };
 })();
