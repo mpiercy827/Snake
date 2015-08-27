@@ -45,12 +45,19 @@
 
 
   Board.prototype.addApple = function (type) {
-    var pos;
+    var pos, apple;
     do {
       pos = Vector.randomPos(this.cols, this.rows);
     } while (this.occupied(pos));
 
-    this.apples.push(new Apple(pos));
+    if (!type) {
+      apple = new Apple(pos);
+    } else if (type === "poison") {
+      apple = new PoisonApple(pos);
+    } else if (type === "golden") {
+      apple = new GoldenApple(pos);
+    }
+    this.apples.push(apple);
   };
 
   Board.prototype.occupied = function (position) {
