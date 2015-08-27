@@ -57,13 +57,15 @@
     } else if (type === "golden") {
       apple = new GoldenApple(pos);
     }
+
+
     this.apples.push(apple);
   };
 
   Board.prototype.occupied = function (position) {
     var occupied = false;
     this.snake.allCoords().forEach(function (pos) {
-      if (pos[0] === position[0] && pos[1] === posistion[1]) {
+      if (pos[0] === position[0] && pos[1] === position[1]) {
         occupied = true;
       }
     });
