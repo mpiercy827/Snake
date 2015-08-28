@@ -127,6 +127,17 @@
     37: "W"
   };
 
+  View.REVERSE_DIRECTIONS {
+    83: "N",  // W
+    65: "E",  // D
+    87: "S",  // S
+    68: "W",   // A
+    40: "N",
+    37: "E",
+    38: "S",
+    39: "W"
+  };
+
   View.prototype.handleKeyEvent = function (event) {
     if (View.DIRECTIONS[event.keyCode]) {
       if (!this.moving) { this.moving = true; }
