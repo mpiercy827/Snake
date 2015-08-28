@@ -24,7 +24,7 @@
     if (this.moving) {
       this.board.snake.move();
       this.specialApples();
-      this.eatApples();
+      this.checkForApples();
     }
 
     if (this.board.gameOver()) {
@@ -49,13 +49,25 @@
     }
   };
 
-  View.prototype.eatApples = function () {
-    var apple = this.board.apples[0];
+  View.prototype.checkForApples = function () {
+    var apples = this.board.allApples();
     var snakeHead = this.board.snake.segments[0];
+    var view = this;
 
-    if (apple.equals(snakeHead)) {
-      this.board.convertApple();
+    apples.forEach(function (apple) {
+      if (apple.vector.equals(snakeHead)) { view.eatApple(apple); }
+    });
+  };
+
+  View.prototype.eatApple = function (apple) {
+    if (!apple.type) {
+      this.board.digestApple();
       this.score += 1;
+    } else if (apple.type === "golden") {
+      this.board.goldenApples.pop();
+      this.score += 5;
+    } else {
+
     }
   };
 
@@ -69,11 +81,11 @@
     var view = this;
 
     $rows.each(function (rowIndex, row) {
-      for (var j = 0; j < view.board.cols; j++) {
+      for (var colIndex = 0; colIndex < view.board.cols; colIndex++) {
         var $cell = $("<div>")
                     .addClass("cell")
                     .attr("data-row", rowIndex)
-                    .attr("data-col", j);
+                    .attr("data-col", colIndex);
         $(row).append($cell);
       }
     });

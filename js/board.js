@@ -50,7 +50,7 @@
       pos = Vector.randomPos(this.cols, this.rows);
     } while (this.occupied(pos));
 
-    var apple = new Vector(pos);
+    var apple = new Snake.Apple({pos: pos, type: type});
 
     if (!type) {
       this.apples.push(apple);
@@ -59,6 +59,10 @@
     } else if (type === "golden") {
       this.goldenApples.push(apple);
     }
+  };
+
+  Board.prototype.allApples = function () {
+    return this.apples.concat(this.goldenApples.concat(this.poisonApples));
   };
 
   Board.prototype.occupied = function (position) {
@@ -72,7 +76,7 @@
     return occupied;
   };
 
-  Board.prototype.convertApple = function () {
+  Board.prototype.digestApple = function () {
     this.snake.addSegment = true;
     this.apples.pop();
     this.addApple();
