@@ -41,7 +41,7 @@
 
   View.prototype.specialApples = function () {
     var addGolden = Math.random() < 0.01;
-    var addPoison = Math.random() < 0.1;
+    var addPoison = Math.random() < 0.01;
 
     this.checkGoldenAppleLife();
     this.checkPoisonTime();
