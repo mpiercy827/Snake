@@ -40,12 +40,23 @@
     var addGolden = Math.random() < 0.01;
     var addPoison = Math.random() < 0.005;
 
+    this.checkGoldenAppleLife();
+
     if (addGolden && this.board.goldenApples.length === 0) {
       this.board.addApple("golden");
+      this.goldenAppleLifespan = 20;
     }
 
     if (addPoison) {
       this.board.addApple("poison");
+    }
+  };
+
+  View.prototype.checkGoldenAppleLife = function () {
+    if (this.goldenAppleLifespan > 0) {
+      this.goldenAppleLifespan -= 1;
+    } else if (this.goldenAppleLifespan === 0 && this.board.goldenApples[0]) {
+      this.board.removeApple(this.board.goldenApples[0]);
     }
   };
 
