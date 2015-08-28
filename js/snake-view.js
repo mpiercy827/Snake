@@ -5,9 +5,7 @@
 
   var View = Snake.View = function($el) {
     this.$el = $el;
-    this.score = 0;
     this.stepTime = 80;
-    this.moving = false;
     this.board = new Snake.Board();
     this.setupView();
     this.bindEvents();
@@ -16,6 +14,8 @@
 
   View.prototype.start = function () {
     this.board.resetBoard();
+    this.score = 0;
+    this.moving = false;
     this.updateView();
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
   };
@@ -23,11 +23,9 @@
   View.prototype.step = function () {
     if (this.moving) { this.board.snake.move(); }
 
-    if (this.board.snakeOut() || this.board.snake.selfCollision()) {
+    if (this.board.gameOver()) {
       clearInterval(this.IntID);
       alert("You lost! Press OK to play again!");
-      this.moving = false;
-      this.score = 0;
       this.start();
     } else {
       this.eatApples();

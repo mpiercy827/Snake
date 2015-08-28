@@ -79,4 +79,7 @@
     this.addApple();
   };
 
+  Board.prototype.gameOver = function () {
+    return this.snakeOut() || this.snake.selfCollision();
+  };
 })();
