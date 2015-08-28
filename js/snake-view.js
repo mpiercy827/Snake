@@ -97,8 +97,8 @@
     var snake = this.board.snake;
     var view = this;
     $(".apple").removeClass("apple");
-    $(".golden-apple").removeClass(".golden-apple");
-    $(".poison-apple").removeClass(".poison-apple");
+    $(".golden-apple").removeClass("golden-apple");
+    $(".poison-apple").removeClass("poison-apple");
     $(".cell.snake").removeClass("snake");
 
     snake.allCoords().forEach(function (pos) {
@@ -106,22 +106,16 @@
       $cell.addClass("snake");
     });
 
-    view.board.apples.forEach(function (apple) {
+    view.board.allApples().forEach(function (apple) {
       var pos = apple.pos;
       var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
-      $cell.addClass("apple");
-    });
-
-    view.board.goldenApples.forEach(function (gApple) {
-      var pos = gApple.pos;
-      var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
-      $cell.addClass("golden-apple");
-    });
-
-    view.board.poisonApples.forEach(function (pApple) {
-      var pos = pApple.pos;
-      var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
-      $cell.addClass("poison-apple");
+      if (!apple.type) {
+        $cell.addClass("apple");
+      } else if (apple.type === "golden") {
+        $cell.addClass("golden-apple");
+      } else if (apple.type === "poison") {
+        $cell.addClass("poison-apple");
+      }
     });
 
     $(".score").text(this.score);
