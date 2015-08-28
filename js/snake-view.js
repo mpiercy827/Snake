@@ -187,6 +187,7 @@
     var keyMap = this.reversedControls ? View.REVERSE_DIRS : View.DIRECTIONS
     var direction = keyMap[event.keyCode];
     if (direction) {
+      event.preventDefault();
       if (!this.moving) { this.moving = true; }
       this.board.snake.turn(direction);
     }

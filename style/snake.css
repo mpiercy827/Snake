@@ -1,13 +1,14 @@
 body {
   background-color: #FAF8EF;
+  font-family: helvetica, sans-serif;
 }
 
 .container {
   padding: 10px;
   width: 600px;
-  height: 500px;
   margin: 0 auto;
   border-radius: 5px;
+  position: relative;
 }
 
 .score-container {
@@ -19,7 +20,6 @@ body {
   background-color: #BBADA0;
   border-radius: 5px;
   font-size: 14px;
-  font-family: helvetica, sans-serif;
 }
 
 .score {
@@ -33,8 +33,21 @@ body {
   position: relative;
   display: block;
   float: left;
-  width: calc(80% + 20px;);
-  height: 100%;
+  width: calc(80% + 20px);
+}
+
+.instructions-container {
+  background-color: #BBADA0;
+  color: #fff;
+  position: relative;
+  width: calc(80%);
+  height: 200px;
+  top: 20px;
+  padding: 10px;
+  clear: both;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .title {
@@ -57,22 +70,22 @@ body {
   border: 1px solid #eee;
 }
 
-.cell.snake {
+.cell.snake, .sample-snake {
   background-color: #0c9;
 }
 
-.cell.snake-poisoned {
+.cell.snake-poisoned, .sample-snake-poisoned {
   background-color: #CC6699;
 }
 
-.cell.apple {
+.cell.apple, .sample-apple {
   background-color: #A80000;
 }
 
-.cell.golden-apple {
+.cell.golden-apple, .sample-golden-apple {
 background-color: #FF9900;
 }
 
-.cell.poison-apple {
+.cell.poison-apple, .sample-poison-apple {
   background-color: #660066;
 }
