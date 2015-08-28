@@ -17,6 +17,8 @@
     this.score = 0;
     this.moving = false;
     this.snakePoisoned = false;
+    this.reversedControls = false;
+    this.reversedTime = 0;
     this.setupView();
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
   };
@@ -39,7 +41,7 @@
 
   View.prototype.specialApples = function () {
     var addGolden = Math.random() < 0.01;
-    var addPoison = Math.random() < 0.01;
+    var addPoison = Math.random() < 0.1;
 
     this.checkGoldenAppleLife();
     this.checkPoisonTime();
@@ -92,7 +94,7 @@
       this.board.removeApple(apple);
       this.reversedControls = true;
       this.snakePoisoned = true;
-      this.reversedTime = 20;
+      this.reversedTime += 20;
     }
   };
 
