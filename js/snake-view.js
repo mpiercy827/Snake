@@ -61,10 +61,10 @@
 
   View.prototype.eatApple = function (apple) {
     if (!apple.type) {
-      this.board.digestApple();
+      this.board.digestApple(apple);
       this.score += 1;
     } else if (apple.type === "golden") {
-      this.board.goldenApples.pop();
+      this.board.removeApple(apple);
       this.score += 5;
     } else {
 

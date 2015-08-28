@@ -76,9 +76,24 @@
     return occupied;
   };
 
-  Board.prototype.digestApple = function () {
+  Board.prototype.removeApple = function (apple) {
+    var collection;
+
+    if (!apple.type) {
+      collection = this.apples;
+    } else if (apple.type === "golden") {
+      collection = this.goldenApples;
+    } else if (apple.type === "poison") {
+      collection = this.poisonApples;
+    }
+
+    var index = collection.indexOf(apple);
+    collection.splice(index, 1);
+  };
+
+  Board.prototype.digestApple = function (apple) {
     this.snake.addSegment = true;
-    this.apples.pop();
+    this.removeApple(apple);
     this.addApple();
   };
 
