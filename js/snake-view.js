@@ -38,7 +38,7 @@
 
   View.prototype.specialApples = function () {
     var addGolden = Math.random() < 0.01;
-    var addPoison = Math.random() < 0.005;
+    var addPoison = Math.random() < 0.01;
 
     this.checkGoldenAppleLife();
 
@@ -78,7 +78,8 @@
       this.board.removeApple(apple);
       this.score += 5;
     } else {
-
+      this.board.removeApple(apple);
+      this.reversedControls = true;
     }
   };
 
@@ -147,7 +148,7 @@
     37: "W"
   };
 
-  View.REVERSE_DIRECTIONS = {
+  View.REVERSE_DIRS = {
     83: "N",  // W
     65: "E",  // D
     87: "S",  // S
@@ -159,9 +160,11 @@
   };
 
   View.prototype.handleKeyEvent = function (event) {
-    if (View.DIRECTIONS[event.keyCode]) {
+    var keyMap = this.reversedControls ? View.REVERSE_DIRS : View.DIRECTIONS
+    var direction = keyMap[event.keyCode];
+    if (direction) {
       if (!this.moving) { this.moving = true; }
-      this.board.snake.turn(View.DIRECTIONS[event.keyCode]);
+      this.board.snake.turn(direction);
     }
   };
 })();
