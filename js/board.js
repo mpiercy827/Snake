@@ -50,18 +50,15 @@
       pos = Vector.randomPos(this.cols, this.rows);
     } while (this.occupied(pos));
 
+    var apple = new Vector(pos);
+
     if (!type) {
-      apple = new Apple(pos);
       this.apples.push(apple);
     } else if (type === "poison") {
-      apple = new PoisonApple(pos);
       this.poisonApples.push(apple);
     } else if (type === "golden") {
-      apple = new GoldenApple(pos);
       this.goldenApples.push(apple);
     }
-
-
   };
 
   Board.prototype.occupied = function (position) {

@@ -50,16 +50,17 @@
   };
 
   View.prototype.eatApples = function () {
-    var applePos = this.board.apples[0].pos;
-    var snakeHead = this.board.snake.segments[0].pos;
+    var apple = this.board.apples[0];
+    var snakeHead = this.board.snake.segments[0];
 
-    if (applePos[0] === snakeHead[0] && applePos[1] === snakeHead[1]) {
+    if (apple.equals(snakeHead)) {
       this.board.convertApple();
       this.score += 1;
     }
   };
 
   View.prototype.setupView = function () {
+    this.$el.empty();
     for (var i = 0; i < this.board.rows; i++) {
       this.$el.append($("<div>").addClass("row"));
     }
@@ -84,6 +85,8 @@
     var snake = this.board.snake;
     var view = this;
     $(".apple").removeClass("apple");
+    $(".golden-apple").removeClass(".golden-apple");
+    $(".poison-apple").removeClass(".poison-apple");
     $(".cell.snake").removeClass("snake");
 
     snake.allCoords().forEach(function (pos) {
@@ -127,7 +130,7 @@
     37: "W"
   };
 
-  View.REVERSE_DIRECTIONS {
+  View.REVERSE_DIRECTIONS = {
     83: "N",  // W
     65: "E",  // D
     87: "S",  // S
