@@ -16,7 +16,7 @@
     this.board.resetBoard();
     this.score = 0;
     this.moving = false;
-    this.updateView();
+    this.setupView();
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
   };
 
