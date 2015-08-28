@@ -66,5 +66,9 @@ body {
 }
 
 .cell.golden-apple {
+background-color: #FF9900;
+}
 
+.cell.poison-apple {
+  background-color: #660066;
 }

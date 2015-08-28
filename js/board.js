@@ -52,14 +52,16 @@
 
     if (!type) {
       apple = new Apple(pos);
+      this.apples.push(apple);
     } else if (type === "poison") {
       apple = new PoisonApple(pos);
+      this.poisonApples.push(apple);
     } else if (type === "golden") {
       apple = new GoldenApple(pos);
+      this.goldenApples.push(apple);
     }
 
 
-    this.apples.push(apple);
   };
 
   Board.prototype.occupied = function (position) {

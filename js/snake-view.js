@@ -21,15 +21,31 @@
   };
 
   View.prototype.step = function () {
-    if (this.moving) { this.board.snake.move(); }
+    if (this.moving) {
+      this.board.snake.move();
+      this.specialApples();
+      this.eatApples();
+    }
 
     if (this.board.gameOver()) {
       clearInterval(this.IntID);
       alert("You lost! Press OK to play again!");
       this.start();
     } else {
-      this.eatApples();
       this.updateView();
+    }
+  };
+
+  View.prototype.specialApples = function () {
+    var addGolden = Math.random() < 0.01;
+    var addPoison = Math.random() < 0.005;
+
+    if (addGolden && this.board.goldenApples.length === 0) {
+      this.board.addApple("golden");
+    }
+
+    if (addPoison) {
+      this.board.addApple("poison");
     }
   };
 
@@ -79,6 +95,18 @@
       var pos = apple.pos;
       var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
       $cell.addClass("apple");
+    });
+
+    view.board.goldenApples.forEach(function (gApple) {
+      var pos = gApple.pos;
+      var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
+      $cell.addClass("golden-apple");
+    });
+
+    view.board.poisonApples.forEach(function (pApple) {
+      var pos = pApple.pos;
+      var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
+      $cell.addClass("poison-apple");
     });
 
     $(".score").text(this.score);
