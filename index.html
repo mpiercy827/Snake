@@ -13,18 +13,35 @@
     <script type="text/javascript" src="./js/board.js"></script>
     <script type="text/javascript" src="./js/snake-view.js"></script>
 
-    <h1 class="title">Snake</h1>
-
-    <section class="container">
-      <div class="game-container"></div>
-      <div class="score-container">
-        Score:<div class="score"></div>
-      </div>
-      <div class="instructions-container">
-        Instructions:
-        
-      </div>
-    </section>
+    <div id="content">
+      <section class="container">
+        <div class="header">
+          Snake
+          <div class="score-container">
+            Score:<div class="score"></div>
+          </div>
+        </div>
+        <div class="game-container"></div>
+        <div class="instructions-container">
+          Instructions:
+          <div class="instructions">
+            W, A, S, D or &#x2190; &#x2191; &#x2192; &#x2193; for movement.
+            <br>
+            <br>
+            <div class="sample-snake"></div> You, the snake.
+            <br>
+            <br>
+            <div class="sample-apple"></div> Eat to grow and increase score 1.
+            <br>
+            <br>
+            <div class="sample-golden-apple"></div> Eat to increase score 5. These disappear quickly.
+            <br>
+            <br>
+            <div class="sample-poison-apple"></div> Avoid these. Eating will reverse controls temporarily.
+          </div>
+        </div>
+      </section>
+    </div>
 
     <script>
       var view = new Snake.View($(".game-container"));

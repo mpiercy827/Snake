@@ -3,62 +3,82 @@ body {
   font-family: helvetica, sans-serif;
 }
 
-.container {
-  padding: 10px;
-  width: 600px;
+#content {
+  width:500px;
+  height: 800px;
   margin: 0 auto;
-  border-radius: 5px;
-  position: relative;
+  box-sizing: border-box;
 }
 
-.score-container {
-  margin: 30% 0%;
-  padding: 10px;
+.container {
+  width: 500px;
+  height: 575px;
+  margin: 0 auto;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.header {
+  width: 100%;
+  height: 75px;
   float: right;
   text-align: center;
   color: #fff;
   background-color: #BBADA0;
-  border-radius: 5px;
-  font-size: 14px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 48px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 .score {
   font-size: 48px;
 }
 
+.score-container {
+  float: right;
+  display: inline-block;
+  font-size: 14px;
+  text-align: center;
+}
+
 .game-container {
   background-color: #BBADA0;
   padding: 10px;
+  margin: 0 auto;
   box-sizing: border-box;
-  position: relative;
-  display: block;
-  float: left;
-  width: calc(80% + 20px);
+  display: inline-block;
+  width: 100%;
 }
 
 .instructions-container {
   background-color: #BBADA0;
   color: #fff;
-  position: relative;
-  width: calc(80%);
-  height: 200px;
-  top: 20px;
+  width: 100%;
+  height: 225px;
   padding: 10px;
-  clear: both;
-  border-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   text-align: center;
-  font-size: 18px;
+  font-size: 24px;
+  margin: 0 auto;
+  display: inline-block;
+  box-sizing: border-box;
+  margin-top: -4px;
 }
 
-.title {
-  font-family: helvetica, sans-serif;
-  font-size: 48px;
-  text-align: center;
+.instructions {
+  width: 90%;
+  text-align: left;
+  font-size: 16px;
+  margin: 0 auto;
 }
 
 .row {
   display: block;
-  clear: both;
+  width: 100%;
 }
 
 .cell {
@@ -88,4 +108,10 @@ background-color: #FF9900;
 
 .cell.poison-apple, .sample-poison-apple {
   background-color: #660066;
+}
+
+.sample-snake, .sample-apple, .sample-golden-apple, .sample-poison-apple {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
 }
