@@ -16,6 +16,7 @@
     this.board.resetBoard();
     this.score = 0;
     this.moving = false;
+    this.snakePoisoned = false;
     this.setupView();
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
   };
@@ -41,6 +42,7 @@
     var addPoison = Math.random() < 0.01;
 
     this.checkGoldenAppleLife();
+    this.checkPoisonTime();
 
     if (addGolden && this.board.goldenApples.length === 0) {
       this.board.addApple("golden");
@@ -57,6 +59,15 @@
       this.goldenAppleLifespan -= 1;
     } else if (this.goldenAppleLifespan === 0 && this.board.goldenApples[0]) {
       this.board.removeApple(this.board.goldenApples[0]);
+    }
+  };
+
+  View.prototype.checkPoisonTime = function () {
+    if (this.reversedTime > 0) {
+      this.reversedTime -= 1;
+    } else if (this.reversedTime === 0) {
+      this.reversedControls = false;
+      this.snakePoisoned = false;
     }
   };
 
@@ -80,6 +91,8 @@
     } else {
       this.board.removeApple(apple);
       this.reversedControls = true;
+      this.snakePoisoned = true;
+      this.reversedTime = 20;
     }
   };
 
@@ -108,14 +121,15 @@
   View.prototype.updateView = function () {
     var snake = this.board.snake;
     var view = this;
-    $(".apple").removeClass("apple");
-    $(".golden-apple").removeClass("golden-apple");
-    $(".poison-apple").removeClass("poison-apple");
-    $(".cell.snake").removeClass("snake");
+    this.removeClasses();
 
     snake.allCoords().forEach(function (pos) {
       var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
-      $cell.addClass("snake");
+      if (view.snakePoisoned) {
+        $cell.addClass("snake-poisoned");
+      } else {
+        $cell.addClass("snake");
+      }
     });
 
     view.board.allApples().forEach(function (apple) {
@@ -131,6 +145,14 @@
     });
 
     $(".score").text(this.score);
+  };
+
+  View.prototype.removeClasses = function () {
+    $(".apple").removeClass("apple");
+    $(".golden-apple").removeClass("golden-apple");
+    $(".poison-apple").removeClass("poison-apple");
+    $(".snake-poisoned").removeClass("snake-poisoned");
+    $(".cell.snake").removeClass("snake");
   };
 
   View.prototype.bindEvents = function () {
