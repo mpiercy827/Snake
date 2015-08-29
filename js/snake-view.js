@@ -32,8 +32,6 @@
       document.cookie = "highScore=0";
       this.highScore = 0;
     }
-
-    $(".high-score").text(this.highScore);
   };
 
   View.prototype.getCookie = function (name) {
@@ -128,31 +126,37 @@
 
     $rows.each(function (rowIndex, row) {
       for (var colIndex = 0; colIndex < view.board.cols; colIndex++) {
-        var $cell = $("<div>")
-                    .addClass("cell")
-                    .attr("data-row", rowIndex)
-                    .attr("data-col", colIndex);
+        var $cell = $("<div>").addClass("cell");
+        $cell.attr("data-row", rowIndex).attr("data-col", colIndex);
         $(row).append($cell);
       }
     });
 
-    $(".score").text(this.score);
-    $(".high-score").text(this.highScore);
+    this.updateView();
+    this.displayOverlay();
   };
 
   View.prototype.updateView = function () {
     var snake = this.board.snake;
     var view = this;
     this.removeClasses();
+    this.displaySnake();
+    this.displayApples();
+    $(".score").text(this.score);
+    $(".high-score").text(this.highScore);
+  };
 
+  View.prototype.displaySnake = function () {
+    var view = this;
+    var snake = this.board.snake;
     snake.allCoords().forEach(function (pos) {
       var $cell = $(".cell[data-row=" + pos[0] + "][data-col=" + pos[1] + "]");
-      if (view.snakePoisoned) {
-        $cell.addClass("snake-poisoned");
-      } else {
-        $cell.addClass("snake");
-      }
+      view.snakePoisoned ? $cell.addClass("snake-poisoned") : $cell.addClass("snake");
     });
+  };
+
+  View.prototype.displayApples = function () {
+    var view = this;
 
     view.board.allApples().forEach(function (apple) {
       var pos = apple.pos;
@@ -165,9 +169,6 @@
         $cell.addClass("poison-apple");
       }
     });
-
-    $(".score").text(this.score);
-    $(".high-score").text(this.highScore);
   };
 
   View.prototype.removeClasses = function () {
@@ -178,9 +179,20 @@
     $(".cell.snake").removeClass("snake");
   };
 
+  View.prototype.displayOverlay = function (loss) {
+    var text = loss ? "Try Again!" : "Press W, A, S, D or the arrow keys to begin.";
+    var $overlay = $("<div>").addClass("overlay").text(text);
+    $(".game-container").append($overlay);
+  };
+
   //Handle game logic at each step.
   View.prototype.step = function () {
-    if (this.moving) { this.move(); }
+    if (this.moving) {
+      this.move()
+    } else {
+      return;
+    }
+    if ($(".overlay").length > 0) { $(".overlay").remove(); }
     this.board.gameOver() ? this.handleLoss() : this.updateView();
   };
 
@@ -193,8 +205,8 @@
   View.prototype.handleLoss = function () {
     clearInterval(this.IntID);
     this.setNewHighScore();
-    alert("You lost! Press OK to play again!");
-    this.start();
+    this.displayOverlay(true);
+    setTimeout(this.start.bind(this), 1000);
   };
 
   //Keybinding and Input handling
@@ -229,7 +241,9 @@
     var direction = keyMap[event.keyCode];
     if (direction) {
       event.preventDefault();
-      if (!this.moving) { this.moving = true; }
+      if (!this.moving) {
+        this.moving = true;
+      }
       this.board.snake.turn(direction);
     }
   };
