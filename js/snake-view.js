@@ -26,7 +26,7 @@
 
   View.prototype.getHighScore = function () {
     if (document.cookie) {
-      this.highScore = this.getCookie("highScore");
+      this.highScore = parseInt(this.getCookie("highScore"));
     } else {
       document.cookie = "highScore=0";
       this.highScore = 0;
@@ -50,6 +50,9 @@
 
     if (this.board.gameOver()) {
       clearInterval(this.IntID);
+      if (this.highScore > parseInt(this.getCookie("highScore"))) {
+        document.cookie = "highScore=" + this.highScore;
+      }
       alert("You lost! Press OK to play again!");
       this.start();
     } else {
@@ -113,6 +116,14 @@
       this.reversedControls = true;
       this.snakePoisoned = true;
       this.reversedTime += 20;
+    }
+
+    this.updateHighScore();
+  };
+
+  View.prototype.updateHighScore = function () {
+    if (this.score > this.highScore) {
+      this.highScore = this.score;
     }
   };
 
