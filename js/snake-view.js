@@ -26,13 +26,19 @@
 
   View.prototype.getHighScore = function () {
     if (document.cookie) {
-      this.highScore = document.cookie.highScore;
+      this.highScore = this.getCookie(highScore);
     } else {
       document.cookie = "highScore=0";
       this.highScore = 0;
     }
 
     $(".high-score").text(this.highScore);
+  };
+
+  View.prototype.getCookie = function (name) {
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
   };
 
   View.prototype.step = function () {
