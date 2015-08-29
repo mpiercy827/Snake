@@ -24,6 +24,7 @@
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
   };
 
+  // Score Setup and Handling
   View.prototype.getHighScore = function () {
     if (document.cookie) {
       this.highScore = parseInt(this.getCookie("highScore"));
@@ -41,25 +42,19 @@
     return (value != null) ? unescape(value[1]) : null;
   };
 
-  View.prototype.step = function () {
-    if (this.moving) {
-      this.board.snake.move();
-      this.specialApples();
-      this.checkForApples();
-    }
-
-    if (this.board.gameOver()) {
-      clearInterval(this.IntID);
-      if (this.highScore > parseInt(this.getCookie("highScore"))) {
-        document.cookie = "highScore=" + this.highScore;
-      }
-      alert("You lost! Press OK to play again!");
-      this.start();
-    } else {
-      this.updateView();
+  View.prototype.updateHighScore = function () {
+    if (this.score > this.highScore) {
+      this.highScore = this.score;
     }
   };
 
+  View.prototype.setNewHighScore = function () {
+    if (this.highScore > parseInt(this.getCookie("highScore"))) {
+      document.cookie = "highScore=" + this.highScore;
+    }
+  };
+
+  //Apple Generation and Consumption
   View.prototype.specialApples = function () {
     var addGolden = Math.random() < 0.01;
     var addPoison = Math.random() < 0.01;
@@ -121,13 +116,7 @@
     this.updateHighScore();
   };
 
-  View.prototype.updateHighScore = function () {
-    if (this.score > this.highScore) {
-      this.highScore = this.score;
-      $(".high-score").text(this.highScore);
-    }
-  };
-
+  //View setup and updating
   View.prototype.setupView = function () {
     this.$el.empty();
     for (var i = 0; i < this.board.rows; i++) {
@@ -148,6 +137,7 @@
     });
 
     $(".score").text(this.score);
+    $(".high-score").text(this.highScore);
   };
 
   View.prototype.updateView = function () {
@@ -177,6 +167,7 @@
     });
 
     $(".score").text(this.score);
+    $(".high-score").text(this.highScore);
   };
 
   View.prototype.removeClasses = function () {
@@ -187,6 +178,26 @@
     $(".cell.snake").removeClass("snake");
   };
 
+  //Handle game logic at each step.
+  View.prototype.step = function () {
+    if (this.moving) { this.move(); }
+    this.board.gameOver() ? this.handleLoss() : this.updateView();
+  };
+
+  View.prototype.move = function () {
+    this.board.snake.move();
+    this.specialApples();
+    this.checkForApples();
+  };
+
+  View.prototype.handleLoss = function () {
+    clearInterval(this.IntID);
+    this.setNewHighScore();
+    alert("You lost! Press OK to play again!");
+    this.start();
+  };
+
+  //Keybinding and Input handling
   View.prototype.bindEvents = function () {
     $(window).on("keydown", this.handleKeyEvent.bind(this));
   };
