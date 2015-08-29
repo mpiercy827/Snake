@@ -33,15 +33,16 @@ body {
   text-align: left;
 }
 
-.score {
+.score, .high-score {
   font-size: 48px;
 }
 
-.score-container {
+.score-container, .high-score-container {
   float: right;
   display: inline-block;
   font-size: 14px;
   text-align: center;
+  padding: 0px 15px;
 }
 
 .game-container {

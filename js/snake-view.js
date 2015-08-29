@@ -19,8 +19,20 @@
     this.snakePoisoned = false;
     this.reversedControls = false;
     this.reversedTime = 0;
+    this.getHighScore();
     this.setupView();
     this.IntID = setInterval(this.step.bind(this), this.stepTime);
+  };
+
+  View.prototype.getHighScore = function () {
+    if (document.cookie) {
+      this.highScore = document.cookie.highScore;
+    } else {
+      document.cookie = "highScore=0";
+      this.highScore = 0;
+    }
+
+    $(".high-score").text(this.highScore);
   };
 
   View.prototype.step = function () {
