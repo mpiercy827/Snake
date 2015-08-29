@@ -124,6 +124,7 @@
   View.prototype.updateHighScore = function () {
     if (this.score > this.highScore) {
       this.highScore = this.score;
+      $(".high-score").text(this.highScore);
     }
   };
 
