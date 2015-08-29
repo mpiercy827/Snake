@@ -26,7 +26,7 @@
 
   View.prototype.getHighScore = function () {
     if (document.cookie) {
-      this.highScore = this.getCookie(highScore);
+      this.highScore = this.getCookie("highScore");
     } else {
       document.cookie = "highScore=0";
       this.highScore = 0;
